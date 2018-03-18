@@ -1,3 +1,14 @@
+"""
+This script define a base game class.You should import this script,and hersitate from "Game",customize game configuring should override function "update":
+    class Test(Game):
+        def __init__(self):
+            Game.init(self)
+            ...
+        def update(self):
+            ...
+
+"""
+
 import gameObject as Object
 import engine_utils as utils
 from get_size import get_size
