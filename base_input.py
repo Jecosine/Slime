@@ -12,6 +12,7 @@ termOut_new[3] &= ~(termios.ECHO|termios.ICANON)
 def get_input():
     close_iodisplay()
     s = sys.stdin.read(1)
+    print s+"\n"
     return s
 
 def getKey(c):

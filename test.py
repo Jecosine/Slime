@@ -1,3 +1,4 @@
+import threading
 import base_input
 from GameFlow import Game
 import gameObject as go
@@ -13,26 +14,31 @@ class Test(Game):
         obj.add_pixel([go.pixel([1,1]),go.pixel([2,1]),go.pixel([3,1]),go.pixel([2,2]),go.pixel([2,3])])
         self.add_object(obj)
     def Move(self):
-        if base_input.getKey('w'):
+        c = base_input.get_input()
+        if c == "w":
             obj.move([0,1])
-        if base_input.getKey('s'):
+            return 0
+        if c == "s":
             obj.move([0,-1])
-        if base_input.getKey("d"):
+            return 0
+        if c == "a":
             obj.move([1,0])
-        if base_input.getKey("a"):
+            return 0
+        if c == "d":
             obj.move([-1,0])
-
+            return 0
     
     def update(self):
+        #threading._start_new_thread(self.render,())
         while (True):
             self.canva = self.fill_panel()
             self.is_running = True
             self.render_once()
             print "\x1b[1;1H\x1b[7m%s",str([obj.pixels[i].position for i in range(5)])
-            #obj.move([1,0])
+        #obj.move([1,0])
             self.Move()
-            if obj.position[0]>30:
-                obj.position[0]=0
+            #if obj.position[0]>30:
+             #   obj.position[0]=0
 
     def __del__(self):
         base_input.restore()

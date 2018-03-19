@@ -49,17 +49,16 @@ class Game:
         time.sleep(0.1)
     def render(self):
         while(True):
-            self.update()
-            #print "\x1b[2J\x1b[?25l\x1b[0m"
+            print "\x1b[2J\x1b[?25l\x1b[0m"
             for p in self.canva:
                 print "\x1b[0m\x1b[%d;%dH\x1b[7m \x1b[0m" % (p[0],p[1])
-            time.sleep(0.5)
+            time.sleep(0.05)
     def run(self,canva):
         threading._start_new_thread(self.render,(canva,))
         
     def update(self):
-        self.canva =  self.fill_panel()
+        #self.canva =  self.fill_panel()
         self.is_running = True
-        self.render_once()
+        #self.render_once()
 
 
