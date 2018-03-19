@@ -8,11 +8,17 @@ termOut_new = termios.tcgetattr(0)
 #Set attributes
 termIn_new[3] &= ~(termios.ECHO|termios.ICANON)
 termOut_new[3] &= ~(termios.ECHO|termios.ICANON)
+termIn_new[6][termios.VMIN] = 0
+termIn_new[6][termios.VTIME] = 1
+termOut_new[6][termios.VMIN] = 0
 
 def get_input():
     close_iodisplay()
-    s = sys.stdin.read(1)
-    print s+"\n"
+    c = sys.stdin.read(1)
+    s = ''
+    while (c):
+        s = c
+        c = sys.stdin.read(1)
     return s
 
 def getKey(c):

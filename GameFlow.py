@@ -36,9 +36,9 @@ class Game:
             for obj in self.objects:
                 for p in obj.pixels:
                     temp = utils.transform(p.position)
-                    if temp not in self.canva and (temp[1]<=self.cols and temp[0]<=self.rows):
+                    if temp not in self.canva and (temp[1]<=self.cols and temp[0]<=self.rows and temp[1] > 0 and temp[0] > 0):
                         self.canva.append(temp)
-        print self.canva
+        #print self.canva
         return self.canva
         #check whether pixel is overdraw
     def render_once(self):
