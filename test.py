@@ -9,25 +9,20 @@ import time
 class Test(Game):
     def __init__(self):
         global obj 
-        self.call=0
         obj = go.Object('obj1',[1.1])
         Game.__init__(self)
         obj.add_pixel([go.pixel([1,1]),go.pixel([2,1]),go.pixel([3,1]),go.pixel([2,2]),go.pixel([2,3])])
         self.add_object(obj)
     def Move(self):
         c = base_input.get_input()
-        time.sleep(0.1)
         if c == "w":
             obj.move([0,1])
-            self.call+=1
             return 0
         if c == "s":
-            self.call+=1
             obj.move([0,-1])
             return 0
         if c == "a":
             obj.move([-1,0])
-            self.call+=1
             return 0
         if c == "d":
             obj.move([1,0])
@@ -40,11 +35,8 @@ class Test(Game):
             self.is_running = True
             self.Move()
             self.render_once()
-            print "\x1b[1;1H\x1b[7m",str([obj.pixels[i].position for i in range(5)]),self.call
-        #obj.move([1,0])
-            
-            #if obj.position[0]>30:
-            #   obj.position[0]=0
+            #print "\x1b[1;1H\x1b[7m",str([obj.pixels[i].position for i in range(5)])
+           
 
     def __del__(self):
         base_input.restore()
