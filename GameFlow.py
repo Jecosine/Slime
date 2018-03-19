@@ -46,7 +46,7 @@ class Game:
         print "\x1b[2J\x1b[?25l\x1b[0m"
         for p in self.canva:
             print "\x1b[0m\x1b[%d;%dH\x1b[7m \x1b[0m" % (p[0],p[1])
-        time.sleep(0.5)
+        time.sleep(0.1)
     def render(self):
         while(True):
             self.update()
