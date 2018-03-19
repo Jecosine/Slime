@@ -36,7 +36,7 @@ class Game:
             for obj in self.objects:
                 for p in obj.pixels:
                     temp = utils.transform(p.position)
-                    if temp not in self.canva and (temp[0]<self.cols and temp[1]<self.rows):
+                    if temp not in self.canva and (temp[1]<=self.cols and temp[0]<=self.rows):
                         self.canva.append(temp)
         print self.canva
         return self.canva

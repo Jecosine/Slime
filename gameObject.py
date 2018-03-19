@@ -18,6 +18,11 @@ class Object:
             return True
         else:
             return False
+    def get_pixels_count(self):
+        return len(self.pixels)
+
+    def get_objects_count(self):
+        return len(self.objects)
 
     def add_child(self,obj):
         self.childs.append(obj)
@@ -25,15 +30,15 @@ class Object:
     def move(self,vector):
         self.position = utils.vector_add(vector,self.position)
         for p in self.pixels:
-            p.position = utils.vector_add(vector,self.position)
+            p.position = utils.vector_add(vector,p.position)
     def add_pixel(self,a):
         """Require a list"""
         for i in a: 
             self.pixels.append(i)
 
 class pixel():
-    def __init__(self):
-        self.position = [0,0]
+    def __init__(self,position = [0,0]):
+        self.position =position
         #self.color = Color().white
 
     def move(self,vector):
