@@ -29,6 +29,7 @@ class Object:
         self.childs.append(obj)
 
     def set_velocity(self,velocity):
+        """pixels per frame"""
         self.velocity = velocity
             
     def move(self,vector):

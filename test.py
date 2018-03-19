@@ -34,8 +34,10 @@ class Test(Game):
             self.canva = self.fill_panel()
             self.is_running = True
             self.Move()
+            self.current_log=str(self.canva+[obj.pixels[i].position for i in range(5)])
             self.render_once()
-            #print "\x1b[1;1H\x1b[7m",str([obj.pixels[i].position for i in range(5)])
+#            self.update_log()
+
            
 
     def __del__(self):
