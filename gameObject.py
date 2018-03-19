@@ -8,6 +8,7 @@ class Object:
     def __init__(self,name,position = [0,0]):
         self.position = [0,0]
         self.is_empty = True
+        self.velocity = []
         self.pixels = []
         self.childs = []
         self.childs_count = len(self.childs)
@@ -27,6 +28,9 @@ class Object:
     def add_child(self,obj):
         self.childs.append(obj)
 
+    def set_velocity(self,velocity):
+        self.velocity = velocity
+            
     def move(self,vector):
         self.position = utils.vector_add(vector,self.position)
         for p in self.pixels:

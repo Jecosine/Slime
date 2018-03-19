@@ -9,7 +9,7 @@ import time
 class Test(Game):
     def __init__(self):
         global obj 
-        obj = go.Object('obj1',[1.1])
+        obj = go.Object('obj1',[1,1])
         Game.__init__(self)
         obj.add_pixel([go.pixel([1,1]),go.pixel([2,1]),go.pixel([3,1]),go.pixel([2,2]),go.pixel([2,3])])
         self.add_object(obj)
