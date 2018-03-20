@@ -91,7 +91,7 @@ class Game:
             if c == "\n":
                 self.get_command(s)
                 break
-            elif c == "\x6f":
+            elif c == "\x7f":
                 if len(s)>0:
                     s = s[:-1]
             else:
