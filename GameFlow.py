@@ -13,6 +13,7 @@ Of course you should implete render or render_once in update.Specific usage can 
 import gameObject as Object
 import engine_utils as utils
 from get_size import get_size
+import base_input
 import time,sys
 import threading
 class Game:
@@ -25,8 +26,11 @@ class Game:
         self.logs = ['']
         self.frame = 0.05
         self.current_log=''
+        self.isPause = False
         self.objects = []
         self.rows,self.cols = get_size()
+        base_input.close_iodisplay()
+
     def add_object(self,obj):
         self.objects.append(obj)
 
@@ -47,28 +51,62 @@ class Game:
                     if temp not in self.canva and (temp[1]<=self.cols and temp[0]<=self.rows-1 and temp[1] > 0 and temp[0] > 0):
                         self.canva.append(temp)
         return self.canva
+
     def render_once(self):
         """Render for only once"""
         self.flush_screen()
         print "\x1b[?25l\x1b[0m"
 
         for p in self.canva:
-            print "\x1b["+str(p[0])+";"+str(p[1])+"H\x1b[7m \x1b[0m"
+            sys.stdout.write( "\x1b["+str(p[0])+";"+str(p[1])+"H\x1b[7m \x1b[0m")
+            sys.stdout.flush()
         self.update_log()
         time.sleep(self.frame)
+    
     def render(self):
         """Render forever"""
         while(True):
             flush_screen()
-            print "\x1b[?25l\x1b[0m"
+            sys.stdout.write("\x1b[?25l\x1b[0m")
             #self.update_log(self)
             for p in self.canva:
                 print "\x1b[0m\x1b[%d;%dH\x1b[7m \x1b[0m" % (p[0],p[1])
             time.sleep(self.frame)
+    
     def set_log(self,log):
         self.logs.append(log)
         return 0
+    
+    def set_pause(self):
+        """pause the running game"""
+        self.isPause = True
+        # base_input.restore()
+        # sys.stdout.write("\x1b[%d;1H\x1b[2K\x1b[7m" % self.rows)
+        # s = raw_input()
+        # sys.stdout.write("\x1b[0m")
+        c = ''
+        while (c != "\x1b"):
+            c = base_input.get_input()
+            base_input.restore()
+            sys.stdout.write("\x1b[%d;1H\x1b[2K\x1b[7m" % self.rows)
+            s = ''
+            while(s != "\n"):
+                s = sys.stdin.read()
+            self.get_command(s)
+        self.isPause = False
+        return 0
 
+    def get_command(self,s):
+        if s == "q":
+            self.__del__()
+        return 0
+
+    def set_resume(self):
+        base_input.close_iodisplay()
+        self.isPause = False
+
+        return 0
+    
     def update_log(self):
         if len(self.logs)>20:
             self.logs.pop(0)

@@ -13,7 +13,7 @@ termIn_new[6][termios.VTIME] = 1
 termOut_new[6][termios.VMIN] = 0
 
 def get_input():
-    close_iodisplay()
+    #close_iodisplay()
     c = sys.stdin.read(1)
     s = ''
     while (c):
@@ -31,5 +31,5 @@ def close_iodisplay():
 
 def restore():
     termios.tcsetattr(0,termios.TCSANOW,termIn_old)
-    termios.tcsetattr(0,termios.TCSANOW,termOut_old)
+    termios.tcsetattr(1,termios.TCSANOW,termOut_old)
 
