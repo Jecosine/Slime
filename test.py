@@ -45,8 +45,8 @@ class Test(Game):
             else:
                 self.current_log+=c+"IN ELSE"
                 self.update_log()
-                if c == "\x1b":
-                    self.set_resume()
+                #if c == "\x1b":
+                 #   self.set_resume()
 #            self.update_log()
 
            

@@ -80,25 +80,34 @@ class Game:
     def set_pause(self):
         """pause the running game"""
         self.isPause = True
-        # base_input.restore()
+        base_input.close_iodisplay()
         # sys.stdout.write("\x1b[%d;1H\x1b[2K\x1b[7m" % self.rows)
         # s = raw_input()
         # sys.stdout.write("\x1b[0m")
         c = ''
+        s = ''
         while (c != "\x1b"):
             c = base_input.get_input()
-            base_input.restore()
-            sys.stdout.write("\x1b[%d;1H\x1b[2K\x1b[7m" % self.rows)
-            s = ''
-            while(s != "\n"):
-                s = sys.stdin.read()
-            self.get_command(s)
-        self.isPause = False
+            if c == "\n":
+                self.get_command(s)
+                break
+            elif c == "\x6f":
+                if len(s)>0:
+                    s = s[:-1]
+            else:
+                s += c
+            sys.stdout.write("\x1b[%d;1H\x1b[2K\x1b[7m%s\x1b[0m" % (self.rows,s))
+            sys.stdout.flush()
+        self.set_resume()
+
+
         return 0
 
     def get_command(self,s):
         if s == "q":
             self.__del__()
+        
+        base_input.close_iodisplay()
         return 0
 
     def set_resume(self):
