@@ -53,7 +53,7 @@ class Game:
         return self.canva
 
     def render_once(self):
-        """Render for only once"""
+        """Render for only once(recommended)"""
         self.flush_screen()
         print "\x1b[?25l\x1b[0m"
 
@@ -68,9 +68,8 @@ class Game:
         while(True):
             flush_screen()
             sys.stdout.write("\x1b[?25l\x1b[0m")
-            #self.update_log(self)
             for p in self.canva:
-                print "\x1b[0m\x1b[%d;%dH\x1b[7m \x1b[0m" % (p[0],p[1])
+                print "\x1b[0m\x1b[%d;%dH\x1b[7m \x1b[0m" % (p[0],p[1]),
             time.sleep(self.frame)
     
     def set_log(self,log):
@@ -92,6 +91,7 @@ class Game:
                 self.get_command(s)
                 break
             elif c == "\x7f":
+                #check whether it is a backspace
                 if len(s)>0:
                     s = s[:-1]
             else:
@@ -104,10 +104,11 @@ class Game:
         return 0
 
     def get_command(self,s):
+        print "\x1b[2K\x1b[0m"
         if s == "q":
             self.__del__()
         
-        base_input.close_iodisplay()
+        #base_input.close_iodisplay()
         return 0
 
     def set_resume(self):

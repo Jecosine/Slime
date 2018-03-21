@@ -37,13 +37,13 @@ class Test(Game):
             self.canva = self.fill_panel()
             self.is_running = True
 
-            self.current_log=str(self.canva)+str(self.isPause)+c
+            self.current_log=str(self.canva)+str(self.isPause)
 
             if (not self.isPause):
                 self.Move(c)
                 self.render_once()
             else:
-                self.current_log+=c+"IN ELSE"
+                self.current_log+="IN ELSE"
                 self.update_log()
                 #if c == "\x1b":
                  #   self.set_resume()

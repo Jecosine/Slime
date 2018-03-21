@@ -13,10 +13,11 @@ termOut_new = termios.tcgetattr(1)
 #Set attributes
 termIn_new[3] &= ~(termios.ECHO|termios.ICANON)
 termOut_new[3] &= ~(termios.ECHO|termios.ICANON)
+
 termIn_new[6][termios.VMIN] = 0
 termIn_new[6][termios.VTIME] = 1
 termOut_new[6][termios.VMIN] = 0
-termOut_new[6][termios.VMIN] = 0
+#termOut_new[6][termios.VTIME] = 1
 #termIn[6][termios.VTIME] = 1
 #termIn[6][termios.VTMIN] = 1
 #termOut[6][termios.VMIN] = 0
@@ -40,9 +41,11 @@ def close_iodisplay():
     termios.tcsetattr(0,termios.TCSANOW,termIn_new)
     termios.tcsetattr(1,termios.TCSANOW,termOut_new)
 
-def restore_in_game():
-    termios.tcsetattr(0,termios.TCSANOW,termIn)
-    termios.tcsetattr(1,termios.TCSANOW,termOut)
+def test():
+    termios.tcsetattr(0,termios.TCSANOW,termIn_new)
+    termios.tcsetattr(1,termios.TCSANOW,termOut_new)
+    print "sadad"
+    #restore()
 
 def restore():
     termios.tcsetattr(0,termios.TCSANOW,termIn_old)
