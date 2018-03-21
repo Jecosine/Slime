@@ -3,26 +3,26 @@ from GameFlow import Game
 import GameObject as go
 from get_size import get_size
 import Engine_Utils as utils
-#class Snake(go.Object):
-#    def __init__(self,name):
-#        go.Object.__init__(self,name)
-#        self.pixels = []
-#        self.add_pixel([go.pixel(),go.pixel(),go.pixel()])
-#        self.direction = [-1,0]
-#        self.rows,self.cols = get_size()
-#        self.position = [self.cols/2,self.rows/2]
-#    def __getitem__(self,index):
-#        return self.pixels[index]
-#    
-#    def __add__(self,obj):
-#        self.pixels.insert(0,obj)
-        
+class Snake(go.Object):
+    def __init__(self,name):
+        go.Object.__init__(self,name)
+
+        self.direction = [-1,0]
+        self.rows,self.cols = get_size()
+        self.position = [self.cols/2,self.rows/2]
+        self.add_pixel([go.pixel(self.position),go.pixel([self.position[0]+1,self.position[1]]),go.pixel([self.position[0]+2,self.position[1]])])
+    def __getitem__(self,index):
+        return self.pixels[index]
+    
+    def add_p(self,position):
+        self.pixels.insert(0,go.pixel(position))
+        return 0
         
 
 class SnakeGame(Game):
     def __init__(self):
+        snake = Snake("snake")
         global snake
-        snake = go.Object("snake")
         Game.__init__(self)
         self.gameover = False
         self.direction = [-1,0]
@@ -38,7 +38,8 @@ class SnakeGame(Game):
             self.direction = [1,0]
         if c == "a":
             self.direction = [-1,0]
-        snake += go.pixel(self.direction)
+        snake.position = utils.vector_add(snake.position,self.direction)
+        snake.add_p(snake.position)
         snake.pixels.pop(-1)
         return 0
 
@@ -51,6 +52,8 @@ class SnakeGame(Game):
             s = c
             self.canva = self.fill_panel()
             self.isrunning = True
+            self.current_log = str(len(snake.pixels))
+            self.update_log()
             if not self.isPause:
                 self.Move(s)
                 self.render_once()
