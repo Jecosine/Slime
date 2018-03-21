@@ -1,8 +1,8 @@
 import threading
-import base_input
+import Base_Input as base_input
 from GameFlow import Game
-import gameObject as go
-import engine_utils as utils
+import GameObject as go
+import Engine_Utils as utils
 import termios
 import time
 

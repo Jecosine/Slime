@@ -10,10 +10,10 @@ This script define a base game class.You should import this script,and hersitate
 Of course you should implete render or render_once in update.Specific usage can be accessed by checking example scripts.
 """
 
-import gameObject as Object
-import engine_utils as utils
+import GameObject as Object
+import Engine_Utils as utils
 from get_size import get_size
-import base_input
+import Base_Input as base_input
 import time,sys
 import threading
 class Game:
@@ -131,4 +131,6 @@ class Game:
         """This function should be override outside"""
         self.is_running = True
 
-
+    def __del__(self):
+        base_input.restore()
+        print "\x1b[?25h"
