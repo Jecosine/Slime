@@ -10,10 +10,14 @@ class Snake(go.Object):
         self.direction = [-1,0]
         self.rows,self.cols = get_size()
         self.position = [self.cols/2,self.rows/2]
-        self.add_pixel([go.pixel(self.position),go.pixel([self.position[0]+1,self.position[1]]),go.pixel([self.position[0]+2,self.position[1]])])
-    def __getitem__(self,index):
-        return self.pixels[index]
+        self.add_pixel([go.pixel(self.position),go.pixel([self.position[0]+1,self.position[1]]),go.pixel([self.position[0]+2,self.position[1]]),go.pixel([self.position[0]+3,self.position[1]]),go.pixel([self.position[0]+4,self.position[1]])])
     
+    def judge(self,position):
+        if position in snake.pixels:
+            return False
+        else:
+            return True
+
     def add_p(self,position):
         self.pixels.insert(0,go.pixel(position))
         return 0
@@ -28,7 +32,7 @@ class SnakeGame(Game):
         self.direction = [-1,0]
         self.add_object(snake)
         self.isPause = False
-    
+        self.frame = 0.1 
     def Move(self,c):
         if c == "w":
             self.direction = [0,1]
@@ -38,6 +42,9 @@ class SnakeGame(Game):
             self.direction = [1,0]
         if c == "a":
             self.direction = [-1,0]
+        if c == "\x1b":
+            self.set_pause()
+            return 0
         snake.position = utils.vector_add(snake.position,self.direction)
         snake.add_p(snake.position)
         snake.pixels.pop(-1)

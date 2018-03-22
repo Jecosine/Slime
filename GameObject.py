@@ -6,7 +6,7 @@ import Engine_Utils as utils
 
 class Object:
     def __init__(self,name,position = [0,0]):
-        self.position = [0,0]
+        self.position = position
         self.is_empty = True
         self.velocity = []
         self.pixels = []
