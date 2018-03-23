@@ -84,27 +84,26 @@ class Game:
         # s = raw_input()
         # sys.stdout.write("\x1b[0m")
         c = ''
-        s = ''
+        command = ''
+        global command
         while (c != "\x1b"):
             c = base_input.get_input()
             if c == "\n":
-                self.get_command(s)
+                self.get_command(command)
                 break
             elif c == "\x7f":
                 #check whether it is a backspace
-                if len(s)>0:
-                    s = s[:-1]
+                if len(command)>0:
+                    command = command[:-1]
             else:
-                s += c
-            sys.stdout.write("\x1b[%d;1H\x1b[2K\x1b[7m%s\x1b[0m" % (self.rows,s))
+                command += c
+            sys.stdout.write("\x1b[%d;1H\x1b[2K\x1b[7m%s\x1b[0m" % (self.rows,command))
             sys.stdout.flush()
         self.set_resume()
-
-
         return 0
 
     def get_command(self,s):
-        print "\x1b[2K\x1b[0m"
+        print "\x1b[2K\x1b[0m",
         if s == "q":
             self.__del__()
         
