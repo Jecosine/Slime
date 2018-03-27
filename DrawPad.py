@@ -1,3 +1,4 @@
+from get_list import get_list
 import Base_Input
 from GameObject import Object,pixel
 import Engine_Utils as utils
@@ -16,6 +17,7 @@ class DrawPad(Game):
         self.add_object(cursor)
         self.add_object(temp)
         self.data = ''
+        self.filename = 'tempfile'
 
     def Move(self,c):
         if c == "w":
@@ -27,15 +29,12 @@ class DrawPad(Game):
         if c == "a":
             cursor.move([-1,0])
         if c == " ":
-            #temp = Object(' ',cursor.position)
-            #if cursor.position not in [temp.pixels[i].positon for i in range(len(temp.pixels))]:
             if len(temp.pixels)>0:
                 if cursor.position not in [temp.pixels[i].position for i in range(len(temp.pixels))]:
                     temp.add_pixel([pixel(cursor.position)])
             else:
                 temp.add_pixel([pixel(cursor.position)])
                 return 0
-            #self.add_object(temp)
         if c == "\x1b":            
             self.set_pause()
             return 0
@@ -54,20 +53,30 @@ class DrawPad(Game):
                 self.render_once()
                 self.data = str([temp.pixels[i].position for i in range(len(temp.pixels))])
     def get_command(self,s):
-        if s == ":w":
-            tempfile = open(str(int(time.time()),'wb'))
-            tempfile.write(self.data)
-            tempfile.close()
-            print "\x1b[2J",
-            return 0
-        if s.split(' ')[0] == ":load":
-            filename = s.split(' ')[1]
-            try:
-                newfile = open(filename,'rb')
-                content = newfile.read()
-            except:
-                self.current_log = content
-                pass
+        args = s.split(' ')
+
+        if len(args) == 2:
+            if args[0] == ":w":
+                tempfile = open(args[1].strip(),'w')
+                tempfile.write(self.data)
+                tempfile.close()
+                print "\x1b[2J",
+                return 0
+            if args[0] == ":load":
+                self.filename = args[1].strip()
+                try:
+                    newfile = open(self.filename,'rb')
+                    content = newfile.read()
+                except:
+                    self.current_log = content
+                else:
+                    pixels = get_list(content)
+                    temp.pixels = pixels
+        elif len(args) == 1:
+            if arg[0] == ':w':
+                tempfile = open(self.filename,'wb')
+                tempfile.write(self.data)
+                tempfile.close()
         print "\x1b[2K",
     def __del__(self):
         f = open("saved",'wb')
