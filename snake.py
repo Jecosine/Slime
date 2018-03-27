@@ -1,3 +1,5 @@
+import sys
+from get_list import get_list
 import Base_Input as bi
 from GameFlow import Game
 import GameObject as go
@@ -13,7 +15,7 @@ class Snake(go.Object):
         self.add_pixel([go.pixel(self.position),go.pixel([self.position[0]+1,self.position[1]]),go.pixel([self.position[0]+2,self.position[1]]),go.pixel([self.position[0]+3,self.position[1]]),go.pixel([self.position[0]+4,self.position[1]])])
     
     def judge(self,position):
-        if position in snake.pixels:
+        if position in [snake.pixels[i].position for i in range(len(snake.pixels))]:
             return False
         else:
             return True
@@ -28,7 +30,7 @@ class SnakeGame(Game):
         snake = Snake("snake")
         global snake
         Game.__init__(self)
-        self.gameover = False
+        #self.gameover = False
         self.direction = [-1,0]
         self.add_object(snake)
         self.isPause = False
@@ -46,8 +48,23 @@ class SnakeGame(Game):
             self.set_pause()
             return 0
         snake.position = utils.vector_add(snake.position,self.direction)
-        snake.add_p(snake.position)
-        snake.pixels.pop(-1)
+        if snake.judge(snake.position):
+            snake.add_p(snake.position)
+            snake.pixels.pop(-1)
+        else:
+            self.gameover()
+        return 0
+
+    def gameover(self):
+        self.objects = []
+        content = open('gameover','r').read()
+        pos = get_list(content)
+        gameover_obj = go.Object('gameover')
+        gameover_obj.add_pixel([go.pixel(i) for i in pos])
+        self.add_object(gameover_obj)
+        self.fill_panel()
+        self.render_once()
+        self.set_pause()
         return 0
 
     def update(self):
