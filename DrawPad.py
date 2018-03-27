@@ -79,9 +79,9 @@ class DrawPad(Game):
                 tempfile.close()
         print "\x1b[2K",
     def __del__(self):
-        f = open("saved",'wb')
-        f.write(self.data)
-        f.close()
+        #f = open("saved",'wb')
+        #f.write(self.data)
+        #f.close()
         Base_Input.restore()
         print "\x1b[2J\x1b[?25h"
 
