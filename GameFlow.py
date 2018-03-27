@@ -104,7 +104,7 @@ class Game:
 
     def get_command(self,s):
         print "\x1b[2K\x1b[0m",
-        if s == "q":
+        if s == ":q":
             self.__del__()
         
         #base_input.close_iodisplay()

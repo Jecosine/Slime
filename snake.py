@@ -35,6 +35,11 @@ class SnakeGame(Game):
         self.add_object(snake)
         self.isPause = False
         self.frame = 0.1 
+    def get_command(self,s):
+        if s == ":q":
+            self.gameover()            
+        if s == ":r":
+            self.__init__()
     def Move(self,c):
         if c == "w":
             self.direction = [0,1]
@@ -54,7 +59,7 @@ class SnakeGame(Game):
         else:
             self.gameover()
         return 0
-
+        
     def gameover(self):
         self.objects = []
         content = open('gameover','r').read()
@@ -84,4 +89,4 @@ class SnakeGame(Game):
 
 if __name__== "__main__":
     test = SnakeGame()
-    test.update()
+test.update()

@@ -40,7 +40,6 @@ class Object:
         """Require a list"""
         for i in a: 
             self.pixels.append(i)
-
 class pixel():
     def __init__(self,position = [0,0]):
         self.position =position
