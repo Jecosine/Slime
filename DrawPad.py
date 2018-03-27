@@ -18,7 +18,7 @@ class DrawPad(Game):
         self.add_object(temp)
         self.data = ''
         self.filename = 'tempfile'
-
+        self.frame = 0.2
     def Move(self,c):
         if c == "w":
             cursor.move([0,1])
@@ -64,26 +64,25 @@ class DrawPad(Game):
                 return 0
             if args[0] == ":load":
                 self.filename = args[1].strip()
-                try:
-                    newfile = open(self.filename,'rb')
+                with open(self.filename,'r') as newfile:
                     content = newfile.read()
-                except:
-                    self.current_log = content
-                else:
-                    pixels = get_list(content)
-                    temp.pixels = pixels
+                #newfile.close()
+                #self.current_log = content
+                pos = get_list(content)
+                temp.pixels = [pixel(i) for i in pos]
         elif len(args) == 1:
             if arg[0] == ':w':
                 tempfile = open(self.filename,'wb')
                 tempfile.write(self.data)
                 tempfile.close()
         print "\x1b[2K",
+
     def __del__(self):
         #f = open("saved",'wb')
         #f.write(self.data)
         #f.close()
         Base_Input.restore()
-        print "\x1b[2J\x1b[?25h"
+        print "\x1b[2J\x1b[1;1H\x1b[?25h",
 
 if __name__ == "__main__":
     test = DrawPad()
