@@ -37,7 +37,7 @@ class SnakeGame(Game):
         self.frame = 0.1 
     def get_command(self,s):
         if s == ":q":
-            self.gameover()            
+            self.isrunning = False
         if s == ":r":
             self.__init__()
     def Move(self,c):
@@ -74,8 +74,8 @@ class SnakeGame(Game):
 
     def update(self):
         s = ''
-        
-        while(True):
+        self.isrunning = True
+        while(self.isrunning):
 
             c = bi.get_input()
             s = c
@@ -86,6 +86,8 @@ class SnakeGame(Game):
             if not self.isPause:
                 self.Move(s)
                 self.render_once()
+        
+        print "\x1b[1;1H\x1b[2J\x1b[0m",
 
 if __name__== "__main__":
     test = SnakeGame()
