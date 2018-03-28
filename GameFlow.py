@@ -55,7 +55,7 @@ class Game:
     def render_once(self):
         """Render for only once(recommended)"""
         self.flush_screen()
-        print "\x1b[?25l\x1b[0m"
+        print "\x1b[?25l\x1b[0m",
 
         for p in self.canva:
             sys.stdout.write( "\x1b["+str(p[0])+";"+str(p[1])+"H\x1b[7m \x1b[0m")
