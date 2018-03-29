@@ -46,7 +46,7 @@ class SnakeGame(Game):
     def instance_food(self):
         food.pixels = []
         random.seed(int(time.time()))
-        temppos = [random.randrange(self.cols+1),random.randrange(self.rows)]
+        temppos = [random.randrange(self.cols-1),random.randrange(self.rows-1)]
         if self.foodpos == temppos:
             self.foodpos = instance_food()
         else:
@@ -112,7 +112,7 @@ class SnakeGame(Game):
             trans[0] = self.rows + trans[0]
         if trans[1] <= 0:
             trans[1] = self.cols + trans[1]
-        if trans[0] > self.rows:
+        if trans[0] > self.rows-1:
             trans[0] = trans[0] - self.rows
         if trans[1] > self.cols:
             trans[1] = trans[1] - self.cols
