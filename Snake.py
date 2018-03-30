@@ -47,10 +47,14 @@ class SnakeGame(Game):
         food.pixels = []
         random.seed(int(time.time()))
         temppos = [random.randrange(self.cols-1),random.randrange(self.rows-1)]
-        if self.foodpos == temppos:
-            self.foodpos = instance_food()
-        else:
-            self.foodpos = temppos
+        #if self.foodpos == temppos:
+        #    self.foodpos = instance_food()
+        #else:
+        #    self.foodpos = temppos
+        while self.foodpos == temppos:
+            random.seed(int(time.time()))
+            temppos = [random.randrange(self.cols-1),random.randrange(self.rows-1)]
+        self.foodpos = temppos
         food.add_pixel([go.pixel(self.foodpos)])
         self.iseaten = False
         return 0
@@ -60,6 +64,13 @@ class SnakeGame(Game):
             self.isrunning = False
         if s == ":r":
             self.__init__()
+        cs = s.split(' ')
+        if cs == 2:
+            if cs[0] == ":set":
+                cs2 = cs[1].split('=')
+                if len(cs2) == 2:
+                    if cs2[0] == "frame":
+                        self.frame = int(cs2[1])
     def Move(self,c):
         if c == "w" and self.direction<>[0,-1]:
             self.direction = [0,1]
@@ -107,16 +118,21 @@ class SnakeGame(Game):
         return self.canva
 
     def transform(self,pos):
-        trans = [self.rows-pos[1],pos[0]]
-        if trans[0] <= 0:
-            trans[0] = self.rows + trans[0]
-        if trans[1] <= 0:
-            trans[1] = self.cols + trans[1]
-        if trans[0] > self.rows-1:
-            trans[0] = trans[0] - self.rows
-        if trans[1] > self.cols:
-            trans[1] = trans[1] - self.cols
-        return trans, [trans[1],self.rows - trans[0]]
+        trans=[self.rows - pos[1] - 1,pos[0]+1]
+        if pos[1]+1 <= 0:
+            trans[0] = 1
+            pos[1] = self.rows - 2
+        if pos[0] < 0:
+            trans[1] = self.cols
+            pos[0] = self.cols - 1
+        if pos[1] + 1 >= self.rows:
+            trans[0] = self.rows - 1
+            pos[1] = 0
+        if pos[0] > self.cols:
+            trans[1] = 1
+            pos[0] = 0
+        
+        return trans, pos
     def update(self):
         s = ''
         self.isrunning = True
