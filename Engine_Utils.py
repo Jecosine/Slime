@@ -2,6 +2,7 @@ from get_size import get_size
 import math
 
 def vector_add(a,b):
+    #vector add
     if len(a) == len(b):
         length = len(a)
     else:
@@ -9,9 +10,11 @@ def vector_add(a,b):
     return [a[i]+b[i] for i in range(length)]
 
 def vector_pmultiply(t,a):
+    #vector 's point multiply
     return [a[i] * t for i in range(len(a))]
 
 def zero(self):
+    #reset vector
     return [0,0]
 
 def magnitude(a):
