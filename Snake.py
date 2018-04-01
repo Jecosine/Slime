@@ -65,12 +65,12 @@ class SnakeGame(Game):
         if s == ":r":
             self.__init__()
         cs = s.split(' ')
-        if cs == 2:
+        if len(cs) == 2:
             if cs[0] == ":set":
                 cs2 = cs[1].split('=')
                 if len(cs2) == 2:
                     if cs2[0] == "frame":
-                        self.frame = int(cs2[1])
+                        self.frame = float(cs2[1])
     def Move(self,c):
         if c == "w" and self.direction<>[0,-1]:
             self.direction = [0,1]
